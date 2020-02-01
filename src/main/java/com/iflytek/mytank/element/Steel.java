@@ -21,12 +21,17 @@ public class Steel extends StaticElement {
         noPassList.add(this);
     }
 
+    private int deadIndex = 0;
+
     public BufferedImage getImage() {
         if (isLive()) {
             return ImageCache.steel;
         } else if (isDead()) {
-            turnRemove();
-            return null;
+            BufferedImage img = ImageCache.dead[deadIndex++ / 5];// /5用于增加爆炸动画时间
+            if (deadIndex / 5 >= ImageCache.dead.length) {
+                turnRemove();
+            }
+            return img;
         }
         return null;
     }

@@ -20,10 +20,23 @@ public class Home extends StaticElement {
         noPassList.add(this);
     }
 
+    private int deadIndex = 0;
+
     public BufferedImage getImage() {
-        return ImageCache.home;
+        if (isLive()) {
+            return ImageCache.home;
+        } else if (isDead()) {
+            BufferedImage img = ImageCache.dead[deadIndex++ / 5];// /5用于增加爆炸动画时间
+            if (deadIndex / 5 >= ImageCache.dead.length) {
+                turnRemove();
+            }
+            return img;
+        }
+        return null;
     }
 
     public void dealHit(Bullet b) {
+        turnDead();
+        noPassList.remove(this);
     }
 }

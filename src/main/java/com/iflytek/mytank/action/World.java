@@ -1,6 +1,7 @@
 package com.iflytek.mytank.action;
 
 import com.iflytek.mytank.constant.GameConstant;
+import com.iflytek.mytank.element.Hero;
 import com.iflytek.mytank.element.StaticElement;
 import com.iflytek.mytank.loader.GameMapLoader;
 import com.iflytek.mytank.loader.ImageCache;
@@ -8,6 +9,8 @@ import com.iflytek.mytank.loader.PropertiesLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 /**
@@ -17,6 +20,7 @@ import java.util.List;
  * @author 445951954@qq.com
  */
 public class World extends JPanel {
+    private Hero hero;
     /**
      * 描述游戏的状态
      */
@@ -30,18 +34,81 @@ public class World extends JPanel {
      * 无参构造用于加载图片
      */
     public World() {
-        //new GameMap(3);//测试代码调用第一关地图
+        hero = new Hero();
         loadFrame(this);
     }
 
+    public static int gameWidth = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_WIGHT));
+    public static int gameHeight = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_HEIGHT));
+
     public static void loadFrame(Component c) {
-        int wigth = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_WIGHT));
-        int height = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_HEIGHT));
         frame.add(c);
-        frame.setSize(wigth, height);
+        frame.setSize(gameWidth + 17, gameHeight + 40);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    /**
+     * 游戏控制模块
+     */
+    private int setMapIndex = 0;
+
+    public void controlGame() {
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (state == GameConstant.GameState.RUNNING) {
+                    switch (keyCode) {
+                        case KeyEvent.VK_UP:
+                            hero.goUp();
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            hero.goDown();
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            hero.goLeft();
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            hero.goRight();
+                            break;
+                        case KeyEvent.VK_SPACE:
+                            //isShoot = true;
+                            break;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_1) {
+                    if (state == GameConstant.GameState.START) {
+                        state = GameConstant.GameState.RUNNING;
+                    }
+                    if (state == GameConstant.GameState.PAUSE) {
+                        state = GameConstant.GameState.RUNNING;
+                    }
+                    if (state == GameConstant.GameState.GAMEOVER) {
+                        hero = new Hero();
+                        //enemies = new com.iflytek.mytank.entity_old.Tank[0];
+                        //heroBullets = new com.iflytek.mytank.entity_old.Bullet[0];
+                        //enemyBullets = new com.iflytek.mytank.entity_old.Bullet[0];
+                        //score = 0;
+                        state = GameConstant.GameState.RUNNING;
+                    }
+                    if (state == GameConstant.GameState.SETMAP) {
+                        state = GameConstant.GameState.RUNNING;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_2) {
+                    if (state == GameConstant.GameState.RUNNING) {
+                        state = GameConstant.GameState.PAUSE;
+                    }
+                }
+//                if (keyCode == KeyEvent.VK_3) {
+//                    if (state == GameConstant.GameState.START) {
+//                        new com.iflytek.mytank.entity_old.GameMap(0);
+//                        state = GameConstant.GameState.SETMAP;
+//                    }
+//                }
+            }
+        });
     }
 
     public int getState() {
@@ -52,7 +119,7 @@ public class World extends JPanel {
         List<StaticElement> staticElements = GameMapLoader.getStaticElements("1");
         if (state == GameConstant.GameState.RUNNING) {
             g.drawImage(ImageCache.background, 0, 0, null);
-//            hero.paint(g);
+            hero.paint(g);
 //            for (int i = 0; i < heroBullets.length; i++) {
 //                heroBullets[i].paint(g);
 //            }

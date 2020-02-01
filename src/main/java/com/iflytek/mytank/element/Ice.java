@@ -15,10 +15,9 @@ import java.awt.image.BufferedImage;
  */
 public class Ice extends StaticElement {
     public Ice(int x, int y) {
-        super(PropertiesLoader.Key.HOME_WIDTH, PropertiesLoader.Key.HOME_HEIGHT);
+        super(PropertiesLoader.Key.ICE_WIDTH, PropertiesLoader.Key.ICE_HEIGHT);
         this.x = x;
         this.y = y;
-        noPassList.add(this);
     }
 
     public BufferedImage getImage() {

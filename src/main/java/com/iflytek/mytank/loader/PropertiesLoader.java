@@ -41,6 +41,9 @@ public class PropertiesLoader {
         String WALL_HEIGHT = "wall.height";
         String HOME_WIDTH = "home.width";
         String HOME_HEIGHT = "home.height";
+        String TANK_WIDTH = "tank.width";
+        String TANK_HEIGHT = "tank.height";
+        String TANK_STEP = "tank.step";
     }
 
     /**

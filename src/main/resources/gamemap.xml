@@ -251,37 +251,37 @@
             <y>10</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>2</x>
             <y>8</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>2</x>
             <y>9</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>2</x>
             <y>10</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>12</x>
             <y>8</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>12</x>
             <y>9</y>
         </thing>
         <thing>
-            <type>ice</type>
+            <type>wall</type>
             <style>全部</style>
             <x>12</x>
             <y>10</y>

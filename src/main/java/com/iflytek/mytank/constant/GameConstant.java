@@ -31,4 +31,14 @@ public interface GameConstant {
         int DEAD = 1;
         int REMOVE = 2;
     }
+
+    /**
+     * 描述方向状态的常量
+     */
+    interface DirectionState {
+        int UP = 0;
+        int DOWN = 1;
+        int LEFT = 2;
+        int RIGHT = 3;
+    }
 }

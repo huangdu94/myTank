@@ -12,7 +12,7 @@ import java.util.TimerTask;
 public class GameApplication {
     public static void run() {
         World world = new World();
-        //world.controlGame();
+        world.controlGame();
         Timer timer = new Timer();
         int interval = 10;
         timer.schedule(new TimerTask() {

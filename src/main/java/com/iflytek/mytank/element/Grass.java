@@ -15,10 +15,9 @@ import java.awt.image.BufferedImage;
  */
 public class Grass extends StaticElement {
     public Grass(int x, int y) {
-        super(PropertiesLoader.Key.HOME_WIDTH, PropertiesLoader.Key.HOME_HEIGHT);
+        super(PropertiesLoader.Key.GRASS_WIDTH, PropertiesLoader.Key.GRASS_HEIGHT);
         this.x = x;
         this.y = y;
-        noPassList.add(this);
     }
 
     public BufferedImage getImage() {
