@@ -1,6 +1,5 @@
 package com.iflytek.mytank.element;
 
-import com.iflytek.mytank.entity_old.Bullet;
 import com.iflytek.mytank.loader.ImageCache;
 import com.iflytek.mytank.loader.PropertiesLoader;
 

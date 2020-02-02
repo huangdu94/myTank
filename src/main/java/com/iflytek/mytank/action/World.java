@@ -1,6 +1,7 @@
 package com.iflytek.mytank.action;
 
 import com.iflytek.mytank.constant.GameConstant;
+import com.iflytek.mytank.element.Bullet;
 import com.iflytek.mytank.element.Hero;
 import com.iflytek.mytank.element.StaticElement;
 import com.iflytek.mytank.loader.GameMapLoader;
@@ -11,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 /**
  * 用于加载世界窗口
@@ -20,11 +20,10 @@ import java.util.List;
  * @author 445951954@qq.com
  */
 public class World extends JPanel {
-    private Hero hero;
     /**
      * 描述游戏的状态
      */
-    private int state = GameConstant.GameState.START;
+    private static int state = GameConstant.GameState.START;
     /**
      * 加载窗口模块
      */
@@ -34,16 +33,16 @@ public class World extends JPanel {
      * 无参构造用于加载图片
      */
     public World() {
-        hero = new Hero();
+        GameMapLoader.loadCurrentMap(1);
         loadFrame(this);
     }
 
-    public static int gameWidth = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_WIGHT));
-    public static int gameHeight = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_HEIGHT));
+    public static final int GAME_WIDTH = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_WIGHT));
+    public static final int GAME_HEIGHT = Integer.parseInt(PropertiesLoader.getProperties(PropertiesLoader.Key.FRAME_HEIGHT));
 
     public static void loadFrame(Component c) {
         frame.add(c);
-        frame.setSize(gameWidth + 17, gameHeight + 40);
+        frame.setSize(GAME_WIDTH + 17, GAME_HEIGHT + 40);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -52,9 +51,8 @@ public class World extends JPanel {
     /**
      * 游戏控制模块
      */
-    private int setMapIndex = 0;
-
     public void controlGame() {
+        Hero hero = CurrentMap.getCurrentMap().getHero();
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
@@ -73,7 +71,7 @@ public class World extends JPanel {
                             hero.goRight();
                             break;
                         case KeyEvent.VK_SPACE:
-                            //isShoot = true;
+                            hero.heroShoot();
                             break;
                     }
                 }
@@ -85,11 +83,7 @@ public class World extends JPanel {
                         state = GameConstant.GameState.RUNNING;
                     }
                     if (state == GameConstant.GameState.GAMEOVER) {
-                        hero = new Hero();
-                        //enemies = new com.iflytek.mytank.entity_old.Tank[0];
-                        //heroBullets = new com.iflytek.mytank.entity_old.Bullet[0];
-                        //enemyBullets = new com.iflytek.mytank.entity_old.Bullet[0];
-                        //score = 0;
+                        //CurrentMap.clearAll();
                         state = GameConstant.GameState.RUNNING;
                     }
                     if (state == GameConstant.GameState.SETMAP) {
@@ -111,15 +105,22 @@ public class World extends JPanel {
         });
     }
 
-    public int getState() {
+
+    public static int getState() {
         return state;
     }
 
+    public static void setState(int state) {
+        World.state = state;
+    }
+
     public void paint(Graphics g) {
-        List<StaticElement> staticElements = GameMapLoader.getStaticElements("1");
         if (state == GameConstant.GameState.RUNNING) {
             g.drawImage(ImageCache.background, 0, 0, null);
-            hero.paint(g);
+            for (StaticElement element : CurrentMap.getCurrentMap().getIceList()) {
+                element.paint(g);
+            }
+            CurrentMap.getCurrentMap().getHero().paint(g);
 //            for (int i = 0; i < heroBullets.length; i++) {
 //                heroBullets[i].paint(g);
 //            }
@@ -129,8 +130,24 @@ public class World extends JPanel {
 //            for (int i = 0; i < enemies.length; i++) {
 //                enemies[i].paint(g);
 //            }
-            for (StaticElement element : staticElements) {
+            CurrentMap.getCurrentMap().getHome().paint(g);
+            for (StaticElement element : CurrentMap.getCurrentMap().getWallList()) {
                 element.paint(g);
+            }
+            for (StaticElement element : CurrentMap.getCurrentMap().getSteelList()) {
+                element.paint(g);
+            }
+            for (StaticElement element : CurrentMap.getCurrentMap().getRiverList()) {
+                element.paint(g);
+            }
+            for (StaticElement element : CurrentMap.getCurrentMap().getGrassList()) {
+                element.paint(g);
+            }
+            for (Bullet b : CurrentMap.getCurrentMap().getHeroBullets()) {
+                b.paint(g);
+            }
+            for (Bullet b : CurrentMap.getCurrentMap().getEnemyBullets()) {
+                b.paint(g);
             }
 //            g.drawString("分数：" + score, 360, 735);
 //            g.drawString("生命：" + hero.showLife(), 360, 755);

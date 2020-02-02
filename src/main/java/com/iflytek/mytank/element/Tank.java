@@ -1,9 +1,6 @@
 package com.iflytek.mytank.element;
 
 import com.iflytek.mytank.constant.GameConstant;
-import com.iflytek.mytank.entity_old.Bullet;
-import com.iflytek.mytank.entity_old.NormalBullet;
-import com.iflytek.mytank.entity_old.SuperBullet;
 
 public abstract class Tank extends MovingElement {
     /**
@@ -64,28 +61,36 @@ public abstract class Tank extends MovingElement {
     /**
      * 火力模式常量
      */
-    private static final int NORMALFIRE = 0;
-    private static final int SUPERFIRE = 1;
-    private int fireState = NORMALFIRE;
+    private int fireState = GameConstant.FireState.NORMAL_FIRE;
 
     //判断坦克是否为正常火力
     public boolean isNormalFire() {
-        return fireState == NORMALFIRE;
+        return fireState == GameConstant.FireState.NORMAL_FIRE;
+    }
+
+    //判断坦克是否为中等火力
+    public boolean isMediumFire() {
+        return fireState == GameConstant.FireState.MEDIUM_FIRE;
     }
 
     //判断坦克是否为超级火力
     public boolean isSuperFire() {
-        return fireState == SUPERFIRE;
+        return fireState == GameConstant.FireState.SUPER_FIRE;
     }
 
     //设置坦克为正常火力
     public void turnNormalFire() {
-        fireState = NORMALFIRE;
+        fireState = GameConstant.FireState.NORMAL_FIRE;
+    }
+
+    //设置坦克为中等火力
+    public void turnMediumFire() {
+        fireState = GameConstant.FireState.MEDIUM_FIRE;
     }
 
     //设置坦克为超级火力
     public void turnSuperFire() {
-        fireState = SUPERFIRE;
+        fireState = GameConstant.FireState.SUPER_FIRE;
     }
 
     /**
@@ -97,35 +102,19 @@ public abstract class Tank extends MovingElement {
         Bullet bs;
         int xStep = this.width / 2;
         int yStep = this.height / 2;
-        int length = 10;
-        if (isNormalFire()) {
-            if (isUp()) {
-                bs = new NormalBullet(this.x + xStep, this.y - length, GameConstant.DirectionState.UP);
-                return bs;
-            } else if (isDown()) {
-                bs = new NormalBullet(this.x + xStep, this.y + this.height + length, GameConstant.DirectionState.DOWN);
-                return bs;
-            } else if (isLeft()) {
-                bs = new NormalBullet(this.x - length, this.y + yStep, GameConstant.DirectionState.LEFT);
-                return bs;
-            } else {
-                bs = new NormalBullet(this.x + this.width + length, this.y + yStep, GameConstant.DirectionState.RIGHT);
-                return bs;
-            }
+        int length = -1;
+        if (isUp()) {
+            bs = new Bullet(this.x + xStep, this.y - length, GameConstant.DirectionState.UP);
+        } else if (isDown()) {
+            bs = new Bullet(this.x + xStep, this.y + this.height + length, GameConstant.DirectionState.DOWN);
+        } else if (isLeft()) {
+            bs = new Bullet(this.x - length, this.y + yStep, GameConstant.DirectionState.LEFT);
         } else {
-            if (isUp()) {
-                bs = new SuperBullet(this.x + xStep, this.y - length, GameConstant.DirectionState.UP);
-                return bs;
-            } else if (isDown()) {
-                bs = new SuperBullet(this.x + xStep, this.y + this.height + length, GameConstant.DirectionState.DOWN);
-                return bs;
-            } else if (isLeft()) {
-                bs = new SuperBullet(this.x - length, this.y + yStep, GameConstant.DirectionState.LEFT);
-                return bs;
-            } else {
-                bs = new SuperBullet(this.x + this.width + length, this.y + yStep, GameConstant.DirectionState.RIGHT);
-                return bs;
-            }
+            bs = new Bullet(this.x + this.width + length, this.y + yStep, GameConstant.DirectionState.RIGHT);
         }
+        if (isSuperFire()) {
+            bs.setStyle(1);
+        }
+        return bs;
     }
 }

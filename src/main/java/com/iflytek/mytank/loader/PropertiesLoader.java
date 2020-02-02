@@ -44,6 +44,9 @@ public class PropertiesLoader {
         String TANK_WIDTH = "tank.width";
         String TANK_HEIGHT = "tank.height";
         String TANK_STEP = "tank.step";
+        String BULLET_WIDTH = "bullet.width";
+        String BULLET_HEIGHT = "bullet.height";
+        String BULLET_STEP = "bullet.step";
     }
 
     /**

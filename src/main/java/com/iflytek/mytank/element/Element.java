@@ -35,7 +35,7 @@ public abstract class Element {
     public boolean canPass(Element element) {
         int x = element.x;
         int y = element.y;
-        if (x < 0 || x > World.gameWidth - element.width || y < 0 || y > World.gameHeight - element.height) {
+        if (x < 0 || x > World.GAME_WIDTH - element.width || y < 0 || y > World.GAME_HEIGHT - element.height) {
             return false;
         }
         for (Element other : noPassList) {

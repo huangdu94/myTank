@@ -41,4 +41,39 @@ public interface GameConstant {
         int LEFT = 2;
         int RIGHT = 3;
     }
+
+    /**
+     * XML文件标签
+     */
+    interface XmlFileLabel {
+        String ROOT = "mytank";
+        String GAME_MAP = "gamemap";
+        String LEVEL = "level";
+        String HOME = "home";
+        String WALL = "wall";
+        String STEEL = "steel";
+        String RIVER = "river";
+        String GRASS = "grass";
+        String ICE = "ice";
+        String STYLE = "style";
+        String X = "x";
+        String Y = "y";
+        String STYLE_UP = "上";
+        String STYLE_DOWN = "下";
+        String STYLE_LEFT = "左";
+        String STYLE_RIGHT = "右";
+        String STYLE_LEFT_UP = "左上";
+        String STYLE_LEFT_DOWN = "左下";
+        String STYLE_RIGHT_UP = "右上";
+        String STYLE_RIGHT_DOWN = "右下";
+    }
+
+    /**
+     * 坦克火力等级
+     */
+    interface FireState {
+        int NORMAL_FIRE = 0;
+        int MEDIUM_FIRE = 1;
+        int SUPER_FIRE = 2;
+    }
 }

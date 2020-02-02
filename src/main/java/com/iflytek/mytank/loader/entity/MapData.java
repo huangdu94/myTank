@@ -11,7 +11,13 @@ import java.util.List;
  * @version 2020/2/1 14:05
  */
 @Data
-public class GameMap {
-    private String level;
-    private List<Thing> thingList;
+public class MapData {
+    /**
+     * 地图关卡
+     */
+    private int level;
+    /**
+     * XML文件中数据
+     */
+    private List<ThingData> thingDataList;
 }

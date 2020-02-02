@@ -1,6 +1,6 @@
 package com.iflytek.mytank.element;
 
-import com.iflytek.mytank.entity_old.Bullet;
+
 import com.iflytek.mytank.loader.ImageCache;
 import com.iflytek.mytank.loader.PropertiesLoader;
 
@@ -20,17 +20,11 @@ public class Wall extends StaticElement {
         noPassList.add(this);
     }
 
-    private int deadIndex = 0;
-
     public BufferedImage getImage() {
         if (isLive()) {
             return ImageCache.wall;
         } else if (isDead()) {
-            BufferedImage img = ImageCache.dead[deadIndex++ / 5];// /5用于增加爆炸动画时间
-            if (deadIndex / 5 >= ImageCache.dead.length) {
-                turnRemove();
-            }
-            return img;
+            return null;
         }
         return null;
     }

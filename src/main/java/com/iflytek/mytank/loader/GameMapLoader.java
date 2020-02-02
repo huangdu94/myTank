@@ -1,17 +1,16 @@
 package com.iflytek.mytank.loader;
 
+import com.iflytek.mytank.action.CurrentMap;
+import com.iflytek.mytank.constant.GameConstant;
 import com.iflytek.mytank.element.*;
-import com.iflytek.mytank.loader.entity.GameMap;
-import com.iflytek.mytank.loader.entity.Thing;
+import com.iflytek.mytank.loader.entity.MapData;
+import com.iflytek.mytank.loader.entity.ThingData;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 地图加载类
@@ -21,8 +20,10 @@ import java.util.Map;
  * @author 445951954@qq.com
  */
 public class GameMapLoader {
-    private static Map<String, List<StaticElement>> staticElementMap = new HashMap<>();
-    private static List<GameMap> gameMapList = new LinkedList<>();
+    /**
+     * 关卡地图数据列表
+     */
+    private static List<MapData> mapDataList = new ArrayList<>();
 
     static {
         loadXML();
@@ -40,25 +41,25 @@ public class GameMapLoader {
             System.out.println("读取XML文档完毕!");
             // 获取根元素
             Element root = doc.getRootElement();
-            List<Element> mapElements = root.elements("gamemap");
+            List<Element> mapElements = root.elements(GameConstant.XmlFileLabel.GAME_MAP);
             for (Element mapElement : mapElements) {
-                GameMap gameMap = new GameMap();
-                List<Thing> thingList = new LinkedList<>();
+                MapData mapData = new MapData();
+                List<ThingData> thingDataList = new LinkedList<>();
                 //获取地图等级
-                String level = mapElement.elementText("level");
-                gameMap.setLevel(level);
+                String level = mapElement.attributeValue(GameConstant.XmlFileLabel.LEVEL);
+                mapData.setLevel(Integer.parseInt(level));
                 //获取当前地图thingList
-                List<Element> thingElements = mapElement.elements("thing");
+                List<Element> thingElements = mapElement.elements();
                 for (Element thingElement : thingElements) {
-                    Thing thing = new Thing();
-                    thing.setType(thingElement.elementText("type"));
-                    thing.setStyle(thingElement.elementText("style"));
-                    thing.setX(thingElement.elementText("x"));
-                    thing.setY(thingElement.elementText("y"));
-                    thingList.add(thing);
+                    ThingData thingData = new ThingData();
+                    thingData.setType(thingElement.getName());
+                    thingData.setStyle(thingElement.attributeValue(GameConstant.XmlFileLabel.STYLE));
+                    thingData.setX(thingElement.elementText(GameConstant.XmlFileLabel.X));
+                    thingData.setY(thingElement.elementText(GameConstant.XmlFileLabel.Y));
+                    thingDataList.add(thingData);
                 }
-                gameMap.setThingList(thingList);
-                gameMapList.add(gameMap);
+                mapData.setThingDataList(thingDataList);
+                mapDataList.add(mapData);
             }
             System.out.println("解析完毕!");
         } catch (Exception e) {
@@ -67,94 +68,49 @@ public class GameMapLoader {
     }
 
     /**
-     * 将实体类转换为最终要用的Map
-     */
-    private static void transfer(String level) {
-        if (staticElementMap.get(level) != null) {
-            return;
-        }
-        for (GameMap gameMap : gameMapList) {
-            if (gameMap.getLevel().equals(level)) {
-                List<StaticElement> staticElements = new LinkedList<>();
-                for (Thing thing : gameMap.getThingList()) {
-                    //坐标转换
-                    int x = Integer.parseInt(thing.getX());
-                    int y = Integer.parseInt(thing.getY());
-                    x = (x - 1) * 40;
-                    y = (y - 1) * 40;
-                    switch (thing.getType()) {
-                        case "home":
-                            Home home = new Home(x, y);
-                            staticElements.add(home);
-                            break;
-                        case "wall":
-                            addWallList(x, y, thing.getStyle(), staticElements);
-                            break;
-                        case "steel":
-                            addSteelList(x, y, thing.getStyle(), staticElements);
-                            break;
-                        case "river":
-                            River river = new River(x, y);
-                            staticElements.add(river);
-                            break;
-                        case "grass":
-                            Grass grass = new Grass(x, y);
-                            staticElements.add(grass);
-                            break;
-                        case "ice":
-                            Ice ice = new Ice(x, y);
-                            staticElements.add(ice);
-                            break;
-                    }
-                }
-                staticElementMap.put(gameMap.getLevel(), staticElements);
-                return;
-            }
-        }
-    }
-
-    /**
      * 添加wallList
      */
-    private static void addWallList(int x, int y, String style, List<StaticElement> staticElements) {
+    private static void addWallList(int x, int y, String style) {
         int xEnd = x + 40;
         int yEnd = y + 40;
-        switch (style) {
-            case "全部":
-                break;
-            case "上":
-                yEnd -= 20;
-                break;
-            case "下":
-                y += 20;
-                break;
-            case "左":
-                xEnd -= 20;
-                break;
-            case "右":
-                x += 20;
-                break;
-            case "左上":
-                xEnd -= 20;
-                yEnd -= 20;
-                break;
-            case "左下":
-                xEnd -= 20;
-                y += 20;
-                break;
-            case "右上":
-                x += 20;
-                yEnd -= 20;
-                break;
-            case "右下":
-                x += 20;
-                y += 20;
-                break;
+        if (style != null) {
+            switch (style) {
+                case GameConstant.XmlFileLabel.STYLE_UP:
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_DOWN:
+                    y += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT:
+                    xEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT:
+                    x += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT_UP:
+                    xEnd -= 20;
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT_DOWN:
+                    xEnd -= 20;
+                    y += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT_UP:
+                    x += 20;
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT_DOWN:
+                    x += 20;
+                    y += 20;
+                    break;
+                default:
+                    break;
+            }
         }
         for (int ix = x; ix < xEnd; ix += 10) {
             for (int iy = y; iy < yEnd; iy += 10) {
                 Wall wall = new Wall(ix, iy);
-                staticElements.add(wall);
+                CurrentMap.getCurrentMap().getWallList().add(wall);
             }
         }
     }
@@ -162,57 +118,97 @@ public class GameMapLoader {
     /**
      * 添加steelList
      */
-    private static void addSteelList(int x, int y, String style, List<StaticElement> staticElements) {
+    private static void addSteelList(int x, int y, String style) {
         int xEnd = x + 40;
         int yEnd = y + 40;
-        switch (style) {
-            case "全部":
-                break;
-            case "上":
-                yEnd -= 20;
-                break;
-            case "下":
-                y += 20;
-                break;
-            case "左":
-                xEnd -= 20;
-                break;
-            case "右":
-                x += 20;
-                break;
-            case "左上":
-                xEnd -= 20;
-                yEnd -= 20;
-                break;
-            case "左下":
-                xEnd -= 20;
-                y += 20;
-                break;
-            case "右上":
-                x += 20;
-                yEnd -= 20;
-                break;
-            case "右下":
-                x += 20;
-                y += 20;
-                break;
+        if (style != null) {
+            switch (style) {
+                case GameConstant.XmlFileLabel.STYLE_UP:
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_DOWN:
+                    y += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT:
+                    xEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT:
+                    x += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT_UP:
+                    xEnd -= 20;
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_LEFT_DOWN:
+                    xEnd -= 20;
+                    y += 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT_UP:
+                    x += 20;
+                    yEnd -= 20;
+                    break;
+                case GameConstant.XmlFileLabel.STYLE_RIGHT_DOWN:
+                    x += 20;
+                    y += 20;
+                    break;
+                default:
+                    break;
+            }
         }
         for (int ix = x; ix < xEnd; ix += 20) {
             for (int iy = y; iy < yEnd; iy += 20) {
                 Steel steel = new Steel(ix, iy);
-                staticElements.add(steel);
+                CurrentMap.getCurrentMap().getSteelList().add(steel);
             }
         }
     }
 
     /**
-     * 根据关卡获得静态物体List
+     * 根据关卡加载地图
      *
      * @param level 关卡
      * @return 静态物体List
      */
-    public static List<StaticElement> getStaticElements(String level) {
-        transfer(level);
-        return staticElementMap.get(level);
+    public static CurrentMap loadCurrentMap(int level) {
+        if (mapDataList.size() == 0) {
+            return null;
+        }
+        for (MapData mapData : mapDataList) {
+            if (mapData.getLevel() == level) {
+                for (ThingData thingData : mapData.getThingDataList()) {
+                    //坐标转换
+                    int x = Integer.parseInt(thingData.getX());
+                    int y = Integer.parseInt(thingData.getY());
+                    x = (x - 1) * 40;
+                    y = (y - 1) * 40;
+                    switch (thingData.getType()) {
+                        case GameConstant.XmlFileLabel.HOME:
+                            Home home = new Home(x, y);
+                            CurrentMap.getCurrentMap().setHome(home);
+                            break;
+                        case GameConstant.XmlFileLabel.WALL:
+                            addWallList(x, y, thingData.getStyle());
+                            break;
+                        case GameConstant.XmlFileLabel.STEEL:
+                            addSteelList(x, y, thingData.getStyle());
+                            break;
+                        case GameConstant.XmlFileLabel.RIVER:
+                            River river = new River(x, y);
+                            CurrentMap.getCurrentMap().getRiverList().add(river);
+                            break;
+                        case GameConstant.XmlFileLabel.GRASS:
+                            Grass grass = new Grass(x, y);
+                            CurrentMap.getCurrentMap().getGrassList().add(grass);
+                            break;
+                        case GameConstant.XmlFileLabel.ICE:
+                            Ice ice = new Ice(x, y);
+                            CurrentMap.getCurrentMap().getIceList().add(ice);
+                            break;
+                    }
+                }
+                return CurrentMap.getCurrentMap();
+            }
+        }
+        return null;
     }
 }
