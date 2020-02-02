@@ -4,6 +4,7 @@ import com.iflytek.mytank.constant.GameConstant;
 import com.iflytek.mytank.element.Bullet;
 import com.iflytek.mytank.element.Hero;
 import com.iflytek.mytank.element.StaticElement;
+import com.iflytek.mytank.element.Tank;
 import com.iflytek.mytank.loader.GameMapLoader;
 import com.iflytek.mytank.loader.ImageCache;
 import com.iflytek.mytank.loader.PropertiesLoader;
@@ -95,12 +96,6 @@ public class World extends JPanel {
                         state = GameConstant.GameState.PAUSE;
                     }
                 }
-//                if (keyCode == KeyEvent.VK_3) {
-//                    if (state == GameConstant.GameState.START) {
-//                        new com.iflytek.mytank.entity_old.GameMap(0);
-//                        state = GameConstant.GameState.SETMAP;
-//                    }
-//                }
             }
         });
     }
@@ -121,15 +116,9 @@ public class World extends JPanel {
                 element.paint(g);
             }
             CurrentMap.getCurrentMap().getHero().paint(g);
-//            for (int i = 0; i < heroBullets.length; i++) {
-//                heroBullets[i].paint(g);
-//            }
-//            for (int i = 0; i < enemyBullets.length; i++) {
-//                enemyBullets[i].paint(g);
-//            }
-//            for (int i = 0; i < enemies.length; i++) {
-//                enemies[i].paint(g);
-//            }
+            for (Tank tank : CurrentMap.getCurrentMap().getEnemies()) {
+                tank.paint(g);
+            }
             CurrentMap.getCurrentMap().getHome().paint(g);
             for (StaticElement element : CurrentMap.getCurrentMap().getWallList()) {
                 element.paint(g);
@@ -140,25 +129,16 @@ public class World extends JPanel {
             for (StaticElement element : CurrentMap.getCurrentMap().getRiverList()) {
                 element.paint(g);
             }
-            for (StaticElement element : CurrentMap.getCurrentMap().getGrassList()) {
-                element.paint(g);
-            }
             for (Bullet b : CurrentMap.getCurrentMap().getHeroBullets()) {
                 b.paint(g);
             }
             for (Bullet b : CurrentMap.getCurrentMap().getEnemyBullets()) {
                 b.paint(g);
             }
-//            g.drawString("分数：" + score, 360, 735);
-//            g.drawString("生命：" + hero.showLife(), 360, 755);
+            for (StaticElement element : CurrentMap.getCurrentMap().getGrassList()) {
+                element.paint(g);
+            }
         }
-//        if (state == GameConstant.GameState.SETMAP) {
-//            g.drawImage(com.iflytek.mytank.element.ImageCache.background, 0, 0, null);
-//            hero.paint(g);
-//            for (int i = 0; i < staticElements.length; i++) {
-//                staticElements[i].paint(g);
-//            }
-//        }
         switch (state) {
             case GameConstant.GameState.START:
                 g.drawImage(ImageCache.start, 0, 0, null);

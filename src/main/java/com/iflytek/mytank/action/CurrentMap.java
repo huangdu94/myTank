@@ -50,6 +50,7 @@ public class CurrentMap {
     private Hero hero;
     private List<Bullet> heroBullets = new LinkedList<>();
 
+    private List<Tank> enemies = new LinkedList<>();
     private List<Bullet> enemyBullets = new LinkedList<>();
 
     /**
@@ -88,6 +89,12 @@ public class CurrentMap {
                     s.dealHit(b);
                 }
             }
+            for (Tank enemy : enemies) {
+                if (enemy.hit(b) && enemy.isLive() && b.isLive()) {
+                    b.turnDead();
+                    enemy.turnDead();
+                }
+            }
         }
         for (Bullet b : enemyBullets) {
             if (home.hit(b) && home.isLive() && b.isLive()) {
@@ -113,6 +120,7 @@ public class CurrentMap {
                     hero.subtractLife();
                     hero.resetLocation();
                 }
+                System.out.println(hero.showLife());
                 if (hero.showLife() <= 0) {
                     World.setState(GameConstant.GameState.GAMEOVER);
                 }
@@ -129,6 +137,8 @@ public class CurrentMap {
 
         wallList.removeIf(Element::isRemove);
         steelList.removeIf(Element::isRemove);
+
+        enemies.removeIf(Element::isRemove);
     }
 
     /**
@@ -140,6 +150,24 @@ public class CurrentMap {
         }
         for (Bullet b : enemyBullets) {
             b.step();
+        }
+        for (Tank t : enemies) {
+            t.step();
+        }
+    }
+
+    /**
+     * 敌人坦克以及子弹入场
+     */
+    private int shootF = 0; //设置敌人子弹射击频率
+
+    public void EnterAction() {
+        if (enemies.size() < 3) {//保持地图上有三辆敌人坦克
+            enemies.add(new AEnemy());
+        }
+        if (shootF++ % 20 == 0) {
+            int i = (int) (Math.random() * enemies.size());
+            enemyBullets.add(enemies.get(i).shoot());
         }
     }
 }

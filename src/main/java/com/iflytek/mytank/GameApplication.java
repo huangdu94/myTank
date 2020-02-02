@@ -19,7 +19,7 @@ public class GameApplication {
         timer.schedule(new TimerTask() {
             public void run() {
                 if (world.getState() == GameConstant.GameState.RUNNING) {
-                    //world.EnterAction();
+                    CurrentMap.getCurrentMap().EnterAction();
                     CurrentMap.getCurrentMap().stepAction();
                     CurrentMap.getCurrentMap().hitAction();
                     CurrentMap.getCurrentMap().outOfBoundAction();
