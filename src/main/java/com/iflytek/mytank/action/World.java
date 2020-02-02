@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
  * @author 445951954@qq.com
  */
 public class World extends JPanel {
+    public static CurrentMap currentMap = CurrentMap.getCurrentMap();
     /**
      * 描述游戏的状态
      */
@@ -53,7 +54,7 @@ public class World extends JPanel {
      * 游戏控制模块
      */
     public void controlGame() {
-        Hero hero = CurrentMap.getCurrentMap().getHero();
+        Hero hero = currentMap.getHero();
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
@@ -112,30 +113,30 @@ public class World extends JPanel {
     public void paint(Graphics g) {
         if (state == GameConstant.GameState.RUNNING) {
             g.drawImage(ImageCache.background, 0, 0, null);
-            for (StaticElement element : CurrentMap.getCurrentMap().getIceList()) {
+            for (StaticElement element : currentMap.getIceList()) {
                 element.paint(g);
             }
-            CurrentMap.getCurrentMap().getHero().paint(g);
-            for (Tank tank : CurrentMap.getCurrentMap().getEnemies()) {
+            currentMap.getHero().paint(g);
+            for (Tank tank : currentMap.getEnemies()) {
                 tank.paint(g);
             }
-            CurrentMap.getCurrentMap().getHome().paint(g);
-            for (StaticElement element : CurrentMap.getCurrentMap().getWallList()) {
+            currentMap.getHome().paint(g);
+            for (StaticElement element : currentMap.getWallList()) {
                 element.paint(g);
             }
-            for (StaticElement element : CurrentMap.getCurrentMap().getSteelList()) {
+            for (StaticElement element : currentMap.getSteelList()) {
                 element.paint(g);
             }
-            for (StaticElement element : CurrentMap.getCurrentMap().getRiverList()) {
+            for (StaticElement element : currentMap.getRiverList()) {
                 element.paint(g);
             }
-            for (Bullet b : CurrentMap.getCurrentMap().getHeroBullets()) {
+            for (Bullet b : currentMap.getHeroBullets()) {
                 b.paint(g);
             }
-            for (Bullet b : CurrentMap.getCurrentMap().getEnemyBullets()) {
+            for (Bullet b : currentMap.getEnemyBullets()) {
                 b.paint(g);
             }
-            for (StaticElement element : CurrentMap.getCurrentMap().getGrassList()) {
+            for (StaticElement element : currentMap.getGrassList()) {
                 element.paint(g);
             }
         }

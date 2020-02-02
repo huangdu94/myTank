@@ -1,6 +1,5 @@
 package com.iflytek.mytank;
 
-import com.iflytek.mytank.action.CurrentMap;
 import com.iflytek.mytank.action.World;
 import com.iflytek.mytank.constant.GameConstant;
 
@@ -19,11 +18,11 @@ public class GameApplication {
         timer.schedule(new TimerTask() {
             public void run() {
                 if (world.getState() == GameConstant.GameState.RUNNING) {
-                    CurrentMap.getCurrentMap().EnterAction();
-                    CurrentMap.getCurrentMap().stepAction();
-                    CurrentMap.getCurrentMap().hitAction();
-                    CurrentMap.getCurrentMap().outOfBoundAction();
-                    CurrentMap.getCurrentMap().clearRemove();
+                    World.currentMap.EnterAction();
+                    World.currentMap.stepAction();
+                    World.currentMap.hitAction();
+                    World.currentMap.outOfBoundAction();
+                    World.currentMap.clearRemove();
                 }
                 world.repaint();
             }
