@@ -6,7 +6,9 @@ import com.iflytek.mytank.loader.PropertiesLoader;
 
 import java.awt.image.BufferedImage;
 
-
+/**
+ * 敌方tank实验版
+ */
 public class AEnemy extends Tank {
     private static int location = 0;//控制出生地点
 
