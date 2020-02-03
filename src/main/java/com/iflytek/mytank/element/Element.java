@@ -39,6 +39,9 @@ public abstract class Element {
             return false;
         }
         for (Element other : noPassList) {
+            if (other == element) {
+                continue;
+            }
             if (other.hit(element)) {
                 return false;
             }

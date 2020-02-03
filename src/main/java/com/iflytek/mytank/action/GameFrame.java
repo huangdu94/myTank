@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 用于加载世界窗口
@@ -95,5 +97,24 @@ public class GameFrame extends JPanel {
 
     public void paint(Graphics g) {
         elementPool.paint(g);
+    }
+
+    public static void run() {
+        GameFrame gameFrame = new GameFrame();
+        gameFrame.controlGame();
+        java.util.Timer timer = new Timer();
+        int interval = 10;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                if (elementPool.getState() == GameConstant.GameState.RUNNING) {
+                    elementPool.EnterAction();
+                    elementPool.stepAction();
+                    elementPool.hitAction();
+                    elementPool.outOfBoundAction();
+                    elementPool.clearRemove();
+                }
+                gameFrame.repaint();
+            }
+        }, interval, interval);
     }
 }

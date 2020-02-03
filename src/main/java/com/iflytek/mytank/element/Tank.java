@@ -12,6 +12,7 @@ public abstract class Tank extends MovingElement {
      */
     protected Tank(String width, String height, int step) {
         super(width, height, step);
+        noPassList.add(this);
     }
 
     /**
@@ -116,5 +117,11 @@ public abstract class Tank extends MovingElement {
             bs.setStyle(1);
         }
         return bs;
+    }
+
+    //让元素状态变成死
+    public void turnDead() {
+        existState = GameConstant.ElementState.DEAD;
+        noPassList.remove(this);
     }
 }
