@@ -3,17 +3,20 @@ import java.io.File;
 import java.io.IOException;
 
 //播放声音的类
-public class PlaySounds extends Thread {
+public class PlaySounds implements Runnable {
 
-    public static void main(String[] args) {
-        PlaySounds playSounds = new PlaySounds("shoot.wav");
-        playSounds.run();
+    public static void main(String[] args) throws InterruptedException {
+        PlaySounds playSounds = new PlaySounds("/shoot.wav");
+        new Thread(playSounds).start();
+        Thread.sleep(1000);
+        new Thread(playSounds).start();
     }
 
     private String filename;
 
     public PlaySounds(String wavfile) {
-        filename = "C:\\Users\\44595\\Music\\" + wavfile;
+        System.out.println(getClass().getResource(wavfile).getPath());
+        filename = getClass().getResource(wavfile).getPath();
     }
 
     public void run() {
