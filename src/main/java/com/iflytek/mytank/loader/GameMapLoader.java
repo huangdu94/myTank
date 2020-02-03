@@ -1,6 +1,6 @@
 package com.iflytek.mytank.loader;
 
-import com.iflytek.mytank.action.CurrentMap;
+import com.iflytek.mytank.action.ElementPool;
 import com.iflytek.mytank.constant.GameConstant;
 import com.iflytek.mytank.element.*;
 import com.iflytek.mytank.loader.entity.MapData;
@@ -110,7 +110,7 @@ public class GameMapLoader {
         for (int ix = x; ix < xEnd; ix += 10) {
             for (int iy = y; iy < yEnd; iy += 10) {
                 Wall wall = new Wall(ix, iy);
-                CurrentMap.getCurrentMap().getWallList().add(wall);
+                ElementPool.getCurrentMap().getWallList().add(wall);
             }
         }
     }
@@ -158,7 +158,7 @@ public class GameMapLoader {
         for (int ix = x; ix < xEnd; ix += 20) {
             for (int iy = y; iy < yEnd; iy += 20) {
                 Steel steel = new Steel(ix, iy);
-                CurrentMap.getCurrentMap().getSteelList().add(steel);
+                ElementPool.getCurrentMap().getSteelList().add(steel);
             }
         }
     }
@@ -169,7 +169,7 @@ public class GameMapLoader {
      * @param level 关卡
      * @return 静态物体List
      */
-    public static CurrentMap loadCurrentMap(int level) {
+    public static ElementPool loadCurrentMap(int level) {
         if (mapDataList.size() == 0) {
             return null;
         }
@@ -184,7 +184,7 @@ public class GameMapLoader {
                     switch (thingData.getType()) {
                         case GameConstant.XmlFileLabel.HOME:
                             Home home = new Home(x, y);
-                            CurrentMap.getCurrentMap().setHome(home);
+                            ElementPool.getCurrentMap().setHome(home);
                             break;
                         case GameConstant.XmlFileLabel.WALL:
                             addWallList(x, y, thingData.getStyle());
@@ -194,19 +194,19 @@ public class GameMapLoader {
                             break;
                         case GameConstant.XmlFileLabel.RIVER:
                             River river = new River(x, y);
-                            CurrentMap.getCurrentMap().getRiverList().add(river);
+                            ElementPool.getCurrentMap().getRiverList().add(river);
                             break;
                         case GameConstant.XmlFileLabel.GRASS:
                             Grass grass = new Grass(x, y);
-                            CurrentMap.getCurrentMap().getGrassList().add(grass);
+                            ElementPool.getCurrentMap().getGrassList().add(grass);
                             break;
                         case GameConstant.XmlFileLabel.ICE:
                             Ice ice = new Ice(x, y);
-                            CurrentMap.getCurrentMap().getIceList().add(ice);
+                            ElementPool.getCurrentMap().getIceList().add(ice);
                             break;
                     }
                 }
-                return CurrentMap.getCurrentMap();
+                return ElementPool.getCurrentMap();
             }
         }
         return null;

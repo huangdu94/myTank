@@ -1,6 +1,6 @@
 package com.iflytek.mytank.element;
 
-import com.iflytek.mytank.action.CurrentMap;
+import com.iflytek.mytank.action.ElementPool;
 import com.iflytek.mytank.loader.ImageCache;
 import com.iflytek.mytank.loader.PropertiesLoader;
 
@@ -69,7 +69,7 @@ public class Hero extends Tank {
      * 英雄坦克射击
      */
     public void heroShoot() {
-        List<Bullet> bulletList = CurrentMap.getCurrentMap().getHeroBullets();
+        List<Bullet> bulletList = ElementPool.getCurrentMap().getHeroBullets();
         // 正常火力只能射一颗子弹 中等和超级火力射两颗
         if (this.isNormalFire()) {
             if (bulletList.size() == 0) {

@@ -1,6 +1,6 @@
 package com.iflytek.mytank;
 
-import com.iflytek.mytank.action.World;
+import com.iflytek.mytank.action.GameFrame;
 import com.iflytek.mytank.constant.GameConstant;
 
 import java.util.Timer;
@@ -11,20 +11,20 @@ import java.util.TimerTask;
  */
 public class GameApplication {
     public static void run() {
-        World world = new World();
-        world.controlGame();
+        GameFrame gameFrame = new GameFrame();
+        gameFrame.controlGame();
         Timer timer = new Timer();
         int interval = 10;
         timer.schedule(new TimerTask() {
             public void run() {
-                if (world.getState() == GameConstant.GameState.RUNNING) {
-                    World.currentMap.EnterAction();
-                    World.currentMap.stepAction();
-                    World.currentMap.hitAction();
-                    World.currentMap.outOfBoundAction();
-                    World.currentMap.clearRemove();
+                if (gameFrame.getState() == GameConstant.GameState.RUNNING) {
+                    GameFrame.elementPool.EnterAction();
+                    GameFrame.elementPool.stepAction();
+                    GameFrame.elementPool.hitAction();
+                    GameFrame.elementPool.outOfBoundAction();
+                    GameFrame.elementPool.clearRemove();
                 }
-                world.repaint();
+                gameFrame.repaint();
             }
         }, interval, interval);
     }

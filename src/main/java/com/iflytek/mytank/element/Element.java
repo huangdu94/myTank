@@ -1,6 +1,6 @@
 package com.iflytek.mytank.element;
 
-import com.iflytek.mytank.action.World;
+import com.iflytek.mytank.action.GameFrame;
 import com.iflytek.mytank.constant.GameConstant;
 import com.iflytek.mytank.loader.PropertiesLoader;
 
@@ -35,7 +35,7 @@ public abstract class Element {
     public boolean canPass(Element element) {
         int x = element.x;
         int y = element.y;
-        if (x < 0 || x > World.GAME_WIDTH - element.width || y < 0 || y > World.GAME_HEIGHT - element.height) {
+        if (x < 0 || x > GameFrame.GAME_WIDTH - element.width || y < 0 || y > GameFrame.GAME_HEIGHT - element.height) {
             return false;
         }
         for (Element other : noPassList) {

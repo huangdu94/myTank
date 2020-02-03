@@ -2,8 +2,10 @@ package com.iflytek.mytank.action;
 
 import com.iflytek.mytank.constant.GameConstant;
 import com.iflytek.mytank.element.*;
+import com.iflytek.mytank.loader.ImageCache;
 import lombok.Data;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,10 +16,10 @@ import java.util.List;
  * @version 2020/2/2 11:52
  */
 @Data
-public class CurrentMap {
-    private static CurrentMap instance;
+public class ElementPool {
+    private static ElementPool instance;
 
-    private CurrentMap() {
+    private ElementPool() {
         hero = new Hero();
     }
 
@@ -28,17 +30,21 @@ public class CurrentMap {
         instance = null;
     }
 
-    public static CurrentMap getCurrentMap() {
+    public static ElementPool getCurrentMap() {
         if (instance == null) {
-            synchronized (CurrentMap.class) {
+            synchronized (ElementPool.class) {
                 if (instance == null) {
-                    instance = new CurrentMap();
+                    instance = new ElementPool();
                 }
             }
         }
         return instance;
     }
 
+    /**
+     * 描述游戏的状态
+     */
+    private int state = GameConstant.GameState.START;
     private int level;
     private Home home;
     private List<Wall> wallList = new LinkedList<>();
@@ -75,7 +81,7 @@ public class CurrentMap {
     public void hitAction() {
         for (Bullet b : heroBullets) {
             if (home.hit(b) && home.isLive() && b.isLive()) {
-                World.setState(GameConstant.GameState.GAMEOVER);
+                state = GameConstant.GameState.GAMEOVER;
             }
             for (StaticElement s : wallList) {
                 if (s.hit(b) && s.isLive() && b.isLive()) {
@@ -95,10 +101,16 @@ public class CurrentMap {
                     enemy.turnDead();
                 }
             }
+            for (Bullet eb : enemyBullets) {
+                if (eb.hit(b) && eb.isLive() && b.isLive()) {
+                    b.turnDead();
+                    eb.turnDead();
+                }
+            }
         }
         for (Bullet b : enemyBullets) {
             if (home.hit(b) && home.isLive() && b.isLive()) {
-                World.setState(GameConstant.GameState.GAMEOVER);
+                state = GameConstant.GameState.GAMEOVER;
             }
             for (StaticElement s : wallList) {
                 if (s.hit(b) && s.isLive() && b.isLive()) {
@@ -122,7 +134,7 @@ public class CurrentMap {
                 }
                 System.out.println(hero.showLife());
                 if (hero.showLife() <= 0) {
-                    World.setState(GameConstant.GameState.GAMEOVER);
+                    state = GameConstant.GameState.GAMEOVER;
                 }
             }
         }
@@ -168,6 +180,49 @@ public class CurrentMap {
         if (shootF++ % 20 == 0) {
             int i = (int) (Math.random() * enemies.size());
             enemyBullets.add(enemies.get(i).shoot());
+        }
+    }
+
+    public void paint(Graphics g) {
+        if (state == GameConstant.GameState.RUNNING) {
+            g.drawImage(ImageCache.background, 0, 0, null);
+            for (StaticElement element : iceList) {
+                element.paint(g);
+            }
+            hero.paint(g);
+            for (Tank tank : enemies) {
+                tank.paint(g);
+            }
+            home.paint(g);
+            for (StaticElement element : wallList) {
+                element.paint(g);
+            }
+            for (StaticElement element : steelList) {
+                element.paint(g);
+            }
+            for (StaticElement element : riverList) {
+                element.paint(g);
+            }
+            for (Bullet b : heroBullets) {
+                b.paint(g);
+            }
+            for (Bullet b : enemyBullets) {
+                b.paint(g);
+            }
+            for (StaticElement element : grassList) {
+                element.paint(g);
+            }
+        }
+        switch (state) {
+            case GameConstant.GameState.START:
+                g.drawImage(ImageCache.start, 0, 0, null);
+                break;
+            case GameConstant.GameState.PAUSE:
+                g.drawImage(ImageCache.pause, 0, 0, null);
+                break;
+            case GameConstant.GameState.GAMEOVER:
+                g.drawImage(ImageCache.gameover, 0, 0, null);
+                break;
         }
     }
 }

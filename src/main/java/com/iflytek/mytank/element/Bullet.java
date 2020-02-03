@@ -1,7 +1,7 @@
 package com.iflytek.mytank.element;
 
 
-import com.iflytek.mytank.action.World;
+import com.iflytek.mytank.action.GameFrame;
 import com.iflytek.mytank.loader.ImageCache;
 import com.iflytek.mytank.loader.PropertiesLoader;
 
@@ -62,9 +62,9 @@ public class Bullet extends MovingElement {
      */
     public boolean outOfBounds() {
         int x1 = 0;
-        int x2 = World.GAME_WIDTH - this.height;
+        int x2 = GameFrame.GAME_WIDTH - this.height;
         int y1 = 0;
-        int y2 = World.GAME_WIDTH - this.height;
+        int y2 = GameFrame.GAME_WIDTH - this.height;
         return x <= x1 || x >= x2 || y <= y1 || y >= y2;
     }
 
