@@ -1,5 +1,11 @@
 package work.huangdu.mytank.action;
 
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
+
+import lombok.Data;
+import work.huangdu.mytank.constant.GameConstant;
 import work.huangdu.mytank.element.AEnemy;
 import work.huangdu.mytank.element.Bullet;
 import work.huangdu.mytank.element.Element;
@@ -13,13 +19,6 @@ import work.huangdu.mytank.element.Steel;
 import work.huangdu.mytank.element.Tank;
 import work.huangdu.mytank.element.Wall;
 import work.huangdu.mytank.loader.ImageCache;
-import work.huangdu.mytank.constant.GameConstant;
-import com.iflytek.mytank.element.*;
-import lombok.Data;
-
-import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 封装现有地图里的所有物体
