@@ -95,6 +95,7 @@ public class GameFrame extends JPanel {
         });
     }
 
+    @Override
     public void paint(Graphics g) {
         elementPool.paint(g);
     }
