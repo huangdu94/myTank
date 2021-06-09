@@ -1,4 +1,4 @@
-package com.iflytek.mytank.loader.entity;
+package work.huangdu.mytank.loader.entity;
 
 import lombok.Data;
 

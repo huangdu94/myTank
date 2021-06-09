@@ -1,9 +1,9 @@
-package com.iflytek.mytank.action;
+package work.huangdu.mytank.action;
 
-import com.iflytek.mytank.constant.GameConstant;
-import com.iflytek.mytank.element.Hero;
-import com.iflytek.mytank.loader.GameMapLoader;
-import com.iflytek.mytank.loader.PropertiesLoader;
+import work.huangdu.mytank.loader.GameMapLoader;
+import work.huangdu.mytank.constant.GameConstant;
+import work.huangdu.mytank.element.Hero;
+import work.huangdu.mytank.loader.PropertiesLoader;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.iflytek.mytank.element;
+package work.huangdu.mytank.element;
 
 /**
  * 静止元素类，所有静止元素的父类

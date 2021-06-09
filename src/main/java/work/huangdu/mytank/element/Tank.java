@@ -1,6 +1,6 @@
-package com.iflytek.mytank.element;
+package work.huangdu.mytank.element;
 
-import com.iflytek.mytank.constant.GameConstant;
+import work.huangdu.mytank.constant.GameConstant;
 
 public abstract class Tank extends MovingElement {
     /**

@@ -1,8 +1,8 @@
-package com.iflytek.mytank.element;
+package work.huangdu.mytank.element;
 
 
-import com.iflytek.mytank.loader.ImageCache;
-import com.iflytek.mytank.loader.PropertiesLoader;
+import work.huangdu.mytank.loader.ImageCache;
+import work.huangdu.mytank.loader.PropertiesLoader;
 
 import java.awt.image.BufferedImage;
 

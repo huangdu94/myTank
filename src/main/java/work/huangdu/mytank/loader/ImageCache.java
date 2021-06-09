@@ -1,4 +1,4 @@
-package com.iflytek.mytank.loader;
+package work.huangdu.mytank.loader;
 
 import java.awt.image.BufferedImage;
 

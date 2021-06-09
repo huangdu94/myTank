@@ -1,8 +1,20 @@
-package com.iflytek.mytank.action;
+package work.huangdu.mytank.action;
 
-import com.iflytek.mytank.constant.GameConstant;
+import work.huangdu.mytank.element.AEnemy;
+import work.huangdu.mytank.element.Bullet;
+import work.huangdu.mytank.element.Element;
+import work.huangdu.mytank.element.Grass;
+import work.huangdu.mytank.element.Hero;
+import work.huangdu.mytank.element.Home;
+import work.huangdu.mytank.element.Ice;
+import work.huangdu.mytank.element.River;
+import work.huangdu.mytank.element.StaticElement;
+import work.huangdu.mytank.element.Steel;
+import work.huangdu.mytank.element.Tank;
+import work.huangdu.mytank.element.Wall;
+import work.huangdu.mytank.loader.ImageCache;
+import work.huangdu.mytank.constant.GameConstant;
 import com.iflytek.mytank.element.*;
-import com.iflytek.mytank.loader.ImageCache;
 import lombok.Data;
 
 import java.awt.*;

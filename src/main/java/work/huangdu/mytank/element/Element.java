@@ -1,8 +1,8 @@
-package com.iflytek.mytank.element;
+package work.huangdu.mytank.element;
 
-import com.iflytek.mytank.action.GameFrame;
-import com.iflytek.mytank.constant.GameConstant;
-import com.iflytek.mytank.loader.PropertiesLoader;
+import work.huangdu.mytank.action.GameFrame;
+import work.huangdu.mytank.loader.PropertiesLoader;
+import work.huangdu.mytank.constant.GameConstant;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

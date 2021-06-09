@@ -1,6 +1,6 @@
-package com.iflytek.mytank;
+package work.huangdu.mytank;
 
-import com.iflytek.mytank.action.GameFrame;
+import work.huangdu.mytank.action.GameFrame;
 
 /**
  * 游戏入口

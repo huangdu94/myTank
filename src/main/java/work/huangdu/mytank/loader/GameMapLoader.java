@@ -1,10 +1,16 @@
-package com.iflytek.mytank.loader;
+package work.huangdu.mytank.loader;
 
-import com.iflytek.mytank.action.ElementPool;
-import com.iflytek.mytank.constant.GameConstant;
+import work.huangdu.mytank.action.ElementPool;
+import work.huangdu.mytank.constant.GameConstant;
+import work.huangdu.mytank.element.Grass;
+import work.huangdu.mytank.element.Home;
+import work.huangdu.mytank.element.Ice;
+import work.huangdu.mytank.element.River;
+import work.huangdu.mytank.element.Steel;
+import work.huangdu.mytank.element.Wall;
 import com.iflytek.mytank.element.*;
-import com.iflytek.mytank.loader.entity.MapData;
-import com.iflytek.mytank.loader.entity.ThingData;
+import work.huangdu.mytank.loader.entity.MapData;
+import work.huangdu.mytank.loader.entity.ThingData;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;

@@ -1,4 +1,4 @@
-package com.iflytek.mytank.constant;
+package work.huangdu.mytank.constant;
 
 /**
  * 保存游戏定义的一些常数

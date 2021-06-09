@@ -1,6 +1,6 @@
-package com.iflytek.mytank.loader;
+package work.huangdu.mytank.loader;
 
-import com.iflytek.mytank.constant.GameConstant;
+import work.huangdu.mytank.constant.GameConstant;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

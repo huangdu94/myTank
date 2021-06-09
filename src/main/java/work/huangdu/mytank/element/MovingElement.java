@@ -1,6 +1,6 @@
-package com.iflytek.mytank.element;
+package work.huangdu.mytank.element;
 
-import com.iflytek.mytank.constant.GameConstant;
+import work.huangdu.mytank.constant.GameConstant;
 
 /**
  * 移动元素类，所有移动元素的父类
